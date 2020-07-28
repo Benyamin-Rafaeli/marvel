@@ -161,10 +161,7 @@
 						"exec": [
 							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
 							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
-							"pm.test('Verify page is 20: ', () => pm.expect(pm.response.json().data.results.length).eq(20));",
-							"",
-							"// pm.test(`TEST ${pm.response.json().data.results[5].id}`, () => pm.expect(true));",
-							""
+							"pm.test('Verify page is 20: ', () => pm.expect(pm.response.json().data.results.length).eq(20));"
 						],
 						"type": "text/javascript"
 					}
@@ -263,9 +260,7 @@
 							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
 							"pm.test('Verify: Status code is 401', () => pm.response.to.have.status(401));",
 							"const verify_response = '{\"code\":\"InvalidCredentials\",\"message\":\"The passed API key is invalid.\"}';",
-							"pm.test(`Verify: ${verify_response}`, () => pm.expect(JSON.stringify(pm.response.json())).to.include(verify_response));",
-							"",
-							""
+							"pm.test(`Verify: ${verify_response}`, () => pm.expect(JSON.stringify(pm.response.json())).to.include(verify_response));"
 						],
 						"type": "text/javascript"
 					}
@@ -306,9 +301,7 @@
 							"pm.test('Verify: count equal 1 ', () => pm.expect(pm.response.json().data.count).eq(1));",
 							"",
 							"const id = !isNaN(pm.response.json().data.results[0].id) ? pm.response.json().data.results[0].id : null;",
-							"if (id != null) { pm.environment.set('movieId', id); }",
-							"",
-							""
+							"if (id != null) { pm.environment.set('movieId', id); }"
 						],
 						"type": "text/javascript"
 					}
@@ -406,7 +399,7 @@
 							"pm.test('Verify: count equal 20 ', () => pm.expect(pm.response.json().data.count).eq(20));",
 							"",
 							"const responseArray = pm.response.json().data.results;",
-							"pm.test('Validate sorted ASC:', () => {",
+							"pm.test('Verify sorted ASC:', () => {",
 							"    var expectedSortedOrder = _.orderBy(responseArray, ['startYear'], ['asc']);",
 							"    pm.expect(responseArray).to.eql(expectedSortedOrder);",
 							"});",
@@ -508,7 +501,7 @@
 							"pm.test('Verify: count equal 20 ', () => pm.expect(pm.response.json().data.count).eq(20));",
 							"",
 							"const responseArray = pm.response.json().data.results;",
-							"pm.test('Validate sorted DESC:', () => {",
+							"pm.test('Verify sorted DESC:', () => {",
 							"    var expectedSortedOrder = _.orderBy(responseArray, ['startYear'], ['desc']);",
 							"    pm.expect(responseArray).to.eql(expectedSortedOrder);",
 							"});"
@@ -610,7 +603,7 @@
 							"pm.test('Verify: urls count equal 3 ', () => pm.expect(Object.keys(response).length).eq(3));",
 							"",
 							"const hateoasRes = ['detail', 'wiki', 'comiclink'];",
-							"response.forEach(el => pm.test(`Validate resourse type: ${el.type}`, () => pm.expect(hateoasRes).to.include(el.type)));"
+							"response.forEach(el => pm.test(`Verify resourse type: ${el.type}`, () => pm.expect(hateoasRes).to.include(el.type)));"
 						],
 						"type": "text/javascript"
 					}
