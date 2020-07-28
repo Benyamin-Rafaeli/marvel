@@ -34,3 +34,5 @@ To Run locally with newman:
 ```
 newman run collection.json -e environment.json
 ```
+
+public/Collection_CLI_Output.PNG
