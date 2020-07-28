@@ -1,0 +1,650 @@
+{
+	"info": {
+		"_postman_id": "c230cbf3-ea71-49d2-8fa4-94b3e5f31793",
+		"name": "marvel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "characters positive page size",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2265e778-b88e-4b2e-bd79-c3452043057e",
+						"exec": [
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
+							"pm.test('Verify: OK', () => pm.expect(pm.response.text()).to.include('OK'));",
+							"pm.test('Verify page is 20: ', () => pm.expect(pm.response.json().data.results.length).eq(20));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Referer",
+						"value": "https://developer.marvel.com/docs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{env}}v1/public/characters?apikey={{publicKey}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"characters"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "characters positive paging",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bc753d6-dd4f-43b8-9186-917e171d750a",
+						"exec": [
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
+							"pm.test('Verify: OK', () => pm.expect(pm.response.text()).to.include('OK'));",
+							"",
+							"const myPageSize = parseInt(pm.environment.get('pageLimit'));",
+							"pm.test(`Verify page is ${myPageSize}: `, () => pm.expect(pm.response.json().data.results.length).eq(myPageSize));",
+							"",
+							"pm.environment.set('firstId', pm.response.json().data.results[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Referer",
+						"type": "text",
+						"value": "https://developer.marvel.com/docs"
+					}
+				],
+				"url": {
+					"raw": "{{env}}v1/public/characters?apikey={{publicKey}}&limit={{pageLimit}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"characters"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						},
+						{
+							"key": "limit",
+							"value": "{{pageLimit}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comics positive get all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a2a7d5ee-f836-43ae-9f2e-f695fe4a02af",
+						"exec": [
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
+							"pm.test('Verify: OK', () => pm.expect(pm.response.text()).to.include('OK'));",
+							"pm.test('Verify page is 20: ', () => pm.expect(pm.response.json().data.results.length).eq(20));",
+							"",
+							"pm.test(`Verify that existing comicsId: ${pm.response.json().data.results[5].id}`, () => pm.expect(true));",
+							"pm.environment.set('comicsId', pm.response.json().data.results[5].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Referer",
+						"value": "https://developer.marvel.com/docs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{env}}v1/public/comics?apikey={{publicKey}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"comics"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comics positive offset by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "05b0fdff-b158-4067-8517-e5c495bcfa67",
+						"exec": [
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
+							"pm.test('Verify page is 20: ', () => pm.expect(pm.response.json().data.results.length).eq(20));",
+							"",
+							"// pm.test(`TEST ${pm.response.json().data.results[5].id}`, () => pm.expect(true));",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Referer",
+						"type": "text",
+						"value": "https://developer.marvel.com/docs"
+					}
+				],
+				"url": {
+					"raw": "{{env}}v1/public/comics?offset={{comicsId}}&apikey={{publicKey}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"comics"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "comic",
+							"disabled": true
+						},
+						{
+							"key": "hasDigitalIssue",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "offset",
+							"value": "{{comicsId}}"
+						},
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "characters negative no Referer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ce6fd112-be45-4ccb-b47b-cad7a0a0880b",
+						"exec": [
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 409', () => pm.response.to.have.status(409));",
+							"const verify_response = '{\"code\":\"MissingParameter\",\"message\":\"You must provide a hash.\"}';",
+							"pm.test(`Verify: ${verify_response}`, () => pm.expect(JSON.stringify(pm.response.json())).to.include(verify_response));",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{env}}v1/public/characters?apikey={{publicKey}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"characters"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "characters negative no API key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "20b4be37-437f-4e22-86fc-c84a6cc9a29d",
+						"exec": [
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 401', () => pm.response.to.have.status(401));",
+							"const verify_response = '{\"code\":\"InvalidCredentials\",\"message\":\"The passed API key is invalid.\"}';",
+							"pm.test(`Verify: ${verify_response}`, () => pm.expect(JSON.stringify(pm.response.json())).to.include(verify_response));",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{env}}v1/public/characters?apikey={{HATEOAS}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"characters"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{HATEOAS}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "characters positive filtering by name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c4f59e7e-9f2b-4c6c-ad04-f27d9887e38b",
+						"exec": [
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
+							"pm.test('Verify: count equal 1 ', () => pm.expect(pm.response.json().data.count).eq(1));",
+							"",
+							"const id = !isNaN(pm.response.json().data.results[0].id) ? pm.response.json().data.results[0].id : null;",
+							"if (id != null) { pm.environment.set('movieId', id); }",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Referer",
+						"value": "https://developer.marvel.com/docs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{env}}v1/public/characters?name={{movieName}}&apikey={{publicKey}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"characters"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{movieName}}"
+						},
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "characters positive filtering by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "793bff1d-e04c-474e-ad1d-5c94d1f141f7",
+						"exec": [
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
+							"pm.test('Verify: count equal 1 ', () => pm.expect(pm.response.json().data.count).eq(1));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Referer",
+						"value": "https://developer.marvel.com/docs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{env}}v1/public/characters/{{movieId}}?apikey={{publicKey}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"characters",
+						"{{movieId}}"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "characters orderBy startYear asc",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "900ffa1f-fd75-4d2c-b6ea-75c09e797646",
+						"exec": [
+							"var _ = require('lodash');",
+							"",
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
+							"pm.test('Verify: count equal 20 ', () => pm.expect(pm.response.json().data.count).eq(20));",
+							"",
+							"const responseArray = pm.response.json().data.results;",
+							"pm.test('Validate sorted ASC:', () => {",
+							"    var expectedSortedOrder = _.orderBy(responseArray, ['startYear'], ['asc']);",
+							"    pm.expect(responseArray).to.eql(expectedSortedOrder);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"
+					},
+					{
+						"key": "Origin",
+						"value": "https://developer.marvel.com"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-site"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Referer",
+						"value": "https://developer.marvel.com/docs"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,he-IL;q=0.8,he;q=0.7,ru;q=0.6,uk;q=0.5"
+					},
+					{
+						"key": "dnt",
+						"value": "1"
+					}
+				],
+				"url": {
+					"raw": "{{env}}v1/public/characters/{{movieId}}/series?orderBy=startYear&apikey={{publicKey}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"characters",
+						"{{movieId}}",
+						"series"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "startYear"
+						},
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "characters orderBy startYear desc",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f3627fa3-c6a0-4b6a-bac2-6f3086951ecf",
+						"exec": [
+							"var _ = require('lodash');",
+							"",
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
+							"pm.test('Verify: count equal 20 ', () => pm.expect(pm.response.json().data.count).eq(20));",
+							"",
+							"const responseArray = pm.response.json().data.results;",
+							"pm.test('Validate sorted DESC:', () => {",
+							"    var expectedSortedOrder = _.orderBy(responseArray, ['startYear'], ['desc']);",
+							"    pm.expect(responseArray).to.eql(expectedSortedOrder);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"
+					},
+					{
+						"key": "Origin",
+						"value": "https://developer.marvel.com"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-site"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Referer",
+						"value": "https://developer.marvel.com/docs"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,he-IL;q=0.8,he;q=0.7,ru;q=0.6,uk;q=0.5"
+					},
+					{
+						"key": "dnt",
+						"value": "1"
+					}
+				],
+				"url": {
+					"raw": "{{env}}v1/public/characters/{{movieId}}/series?orderBy=-startYear&apikey={{publicKey}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"characters",
+						"{{movieId}}",
+						"series"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "-startYear"
+						},
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "characters positive filtering by HATEOAS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec70ca95-75f4-4353-80a0-6f084fcabecc",
+						"exec": [
+							"pm.test(`Actual response time: ${pm.response.responseTime}`, () => pm.expect(true));",
+							"pm.test('Verify: Status code is 200', () => pm.response.to.have.status(200));",
+							"pm.test('Verify: count equal 1 ', () => pm.expect(pm.response.json().data.count).eq(1));",
+							"",
+							"const response = pm.response.json().data.results[0].urls;",
+							"pm.test('Verify: urls count equal 3 ', () => pm.expect(Object.keys(response).length).eq(3));",
+							"",
+							"const hateoasRes = ['detail', 'wiki', 'comiclink'];",
+							"response.forEach(el => pm.test(`Validate resourse type: ${el.type}`, () => pm.expect(hateoasRes).to.include(el.type)));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Referer",
+						"type": "text",
+						"value": "https://developer.marvel.com/docs"
+					}
+				],
+				"url": {
+					"raw": "{{env}}v1/public/characters/{{movieId}}?apikey={{publicKey}}",
+					"host": [
+						"{{env}}v1"
+					],
+					"path": [
+						"public",
+						"characters",
+						"{{movieId}}"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{publicKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

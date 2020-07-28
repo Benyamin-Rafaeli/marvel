@@ -1,0 +1,49 @@
+{
+	"id": "424484ec-740e-4eaf-9c14-30f1ad0568f8",
+	"name": "marvel",
+	"values": [
+		{
+			"key": "env",
+			"value": "https://gateway.marvel.com/",
+			"enabled": true
+		},
+		{
+			"key": "publicKey",
+			"value": "bc2bf3ffc4122f543fffa2913ab7e346",
+			"enabled": true
+		},
+		{
+			"key": "privateKey",
+			"value": "e3bfc07e22d8c77413dad1499a791f63b9dd8de5",
+			"enabled": true
+		},
+		{
+			"key": "movieName",
+			"value": "Spider-Man",
+			"enabled": true
+		},
+		{
+			"key": "movieId",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "pageLimit",
+			"value": "10",
+			"enabled": true
+		},
+		{
+			"key": "firstId",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "comicsId",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-07-28T10:39:56.081Z",
+	"_postman_exported_using": "Postman/7.29.1"
+}
