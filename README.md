@@ -34,5 +34,10 @@ To Run locally with newman:
 ```
 newman run collection.json -e environment.json
 ```
-
+### Run Postman Collections Using Docker
 <img src="./public/Collection_CLI_Output.PNG">
+
+### Collection Run HTML Reports
+
+<img src="./public/Custom_Reports.gif">
+
