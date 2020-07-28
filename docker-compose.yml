@@ -1,0 +1,14 @@
+version: "2"
+services:
+  postman_checks:
+      container_name: marvel
+      build: .      
+      image: postman_marvel
+      command:        
+        run collection.json        
+        -e environment.json        
+        # -r html,cli 
+        # --reporter-html-export reports/CTERA_Test_Run.html 
+        # --reporter-html-template reports/templates/customTemplate.hbs
+      volumes:
+        - ./src:/newman        
